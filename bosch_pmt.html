@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博世智能驾驶数据闭环工具链 | Bosch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bosch-blue': '#005691',
+                        'bosch-light-blue': '#008ECF',
+                        'bosch-dark': '#1A1A1A',
+                        'bosch-gray': '#5A6872',
+                        'bosch-light': '#F5F5F5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #005691 0%, #002E4D 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M54.627 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM22.485 0l.83.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 22.485l.828.83-1.415 1.415-.828-.828-.828.828L-2.83 22.485l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM0 54.627l.828.83-1.415 1.415-.828-.828-.828.828L-2.83 54.627l.828-.828-.828-.828 1.415-1.415.828.828.828-.828 1.415 1.415-.828.828zM54.627 60l.83-.828 1.415 1.415.828.828.828-.828 1.415 1.415-.828.828.828.828-1.415 1.415-.828-.828-.828.828-1.415-1.415.828-.828zM22.485 60l.83-.828 1.415 1.415.828.828.828-.828 1.415 1.415-.828.828.828.828-1.415 1.415-.828-.828-.828.828-1.415 1.415-.828-.828z" fill="%23ffffff" fill-opacity="0.05" fill-rule="evenodd"/%3E%3C/svg%3E');
+            pointer-events: none; 
+            z-index: 0;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-white text-bosch-dark antialiased">
+
+    <!-- 顶部彩条 -->
+    <div class="h-2 w-full bg-gradient-to-r from-red-600 via-bosch-blue to-teal-400 fixed top-0 z-50"></div>
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-sm z-40 top-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <!-- LOGO 更新：高度调整为 h-11 -->
+                    <img src="./pmt_images/bosch_logo.png" 
+                         alt="BOSCH" 
+                         class="h-11 w-auto"
+                         onerror="this.onerror=null;this.src='./test.jpg';">
+                    
+                    <div class="h-8 w-px bg-gray-300 mx-2"></div>
+                    <span class="text-sm font-medium text-bosch-gray">智能驾驶数据闭环工具链</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-sm font-medium text-bosch-gray hover:text-bosch-blue transition flex items-center">首页</a>
+                    <a href="#matrix" class="text-sm font-medium text-bosch-gray hover:text-bosch-blue transition flex items-center">产品矩阵</a>
+                    <a href="#products-details-container" class="text-sm font-medium text-bosch-gray hover:text-bosch-blue transition flex items-center">详细介绍</a>
+                </div>
+                <!-- <button class="bg-bosch-blue text-white px-5 py-2 text-sm font-medium rounded hover:bg-blue-800 transition">
+                    联系演示
+                </button>
+				-->
+				<button onclick="document.querySelector('footer').scrollIntoView({ behavior: 'smooth' })" class="bg-bosch-blue text-white px-5 py-2 text-sm font-medium rounded hover:bg-blue-800 transition">
+					联系演示
+				</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section id="home" class="hero-bg pt-32 pb-24 text-white">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl font-bold mb-6 leading-tight">加速智能驾驶研发<br>数据闭环解决方案</h1>
+                <p class="text-xl text-gray-200 mb-8 leading-relaxed">
+                    博世提供从车端数据采集、到云端管理、仿真、训练等全栈式工具链<br>
+					赋能开发者，让数据产生价值，让迭代超越预期
+                </p>
+                <div class="flex gap-4">
+                    <a href="#matrix" class="bg-white text-bosch-blue px-8 py-3 rounded font-semibold hover:bg-gray-100 transition shadow-lg cursor-pointer block relative z-20">
+                        探索全系产品
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品矩阵概览 -->
+    <section id="matrix" class="py-20 bg-bosch-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-bosch-dark mb-4">全流程产品矩阵</h2>
+                <p class="text-bosch-gray max-w-2xl mx-auto">
+                    覆盖从数据采集、处理、标注、训练到仿真的每一个环节。
+                </p>
+            </div>
+            
+            <div id="product-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- JS 生成 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品详细介绍 -->
+    <div id="products-details-container" class="bg-white">
+        <!-- JS 生成 -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-bosch-dark text-white py-12 border-t-4 border-bosch-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <!-- Footer Logo 更新：移除了 bg-white 和 p-1，高度设为 h-11 -->
+                    <img src="./pmt_images/bosch_logo_white.png" 
+                         alt="BOSCH" 
+                         class="h-11 w-auto mb-4"
+                         onerror="this.onerror=null;this.src='./test.jpg';">
+                    <p class="text-gray-400 text-sm max-w-md">
+                        科技成就生活之美。博世致力于通过创新的技术和服务，为全球智能驾驶行业提供高效、可靠的开发工具链支持。
+                    </p>
+                </div>
+				<!--
+                <div>
+                    <h4 class="font-bold mb-4 text-bosch-light-blue">解决方案</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>数据采集</li>
+                        <li>数据管理</li>
+                        <li>AI 训练</li>
+                        <li>仿真测试</li>
+                    </ul>
+                </div>
+				-->
+                <div>
+                    <h4 class="font-bold mb-4 text-bosch-light-blue">联系我们</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>上海市长宁区福泉北路333号</li>
+                        <li>luoyi.huang@cn.bosch.com</li>
+                        <li>+86 189 5843 1197</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+                &copy; 2025 Robert Bosch. All rights reserved. 
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        const products = [
+            {
+                id: "product-1",
+                name: "车端一体化工具",
+                subtitle: "数据采集与OTA",
+                desc: "开发阶段的数采控制，车辆管理，远程OTA一站式方案。",
+                colorClass: "text-blue-600",
+                bgClass: "bg-blue-50",
+                imageUrl: "./pmt_images/AIO.jpg",
+                iconPath: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+                painPoints: ["要录制数据种类多", "车多、版本多，状态混乱", "车端运维费时费力", "研发节奏被车端拖慢", "数据上传慢，通常几小时", "云端需要额外资源处理匿名化"],
+                sellingPoints: ["兼容主流数采工具，可录CAN/以太网/MCU/SoC/Raw等数据", "支持手动和自动数据录制", "可远程到车端ECU内部调试", "15分钟一键OTA底软/MCU/SOC", "5分钟核心数据合规上云", "车端人脸和车牌匿名化"],
+                value: "研发提速，运维减负"
+            },
+            {
+                id: "product-2",
+                name: "数据可视化工具",
+                subtitle: "流式与离线可视化",
+                desc: "车端实时流与云端离线数据的统一跨平台可视化方案。",
+                colorClass: "text-cyan-600",
+                bgClass: "bg-cyan-50",
+                imageUrl: "./pmt_images/wavizzz.jpg",
+                iconPath: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
+                painPoints: ["传感器数据难以直观理解", "多源数据时间对齐显示困难", "问题排查需要反复播放", "团队协作查看不便", "现有工具功能单一或不兼容"],
+                sellingPoints: ["支持30+种数据格式实时播放", "多传感器时空同步显示", "3D窗口/图像/点云/OCC以及多种自定义信号可视化", "跨平台无缝切换", "支持团队协作和分享", "网页端即开即用，无需安装"],
+                value: "从“盲人摸象”到“全局洞察”"
+            },
+            {
+                id: "product-3",
+                name: "数据管理平台",
+                subtitle: "PB级数据湖",
+                desc: "数据湖、标签体系、质量检查、真值管理，统一数据资产。",
+                colorClass: "text-purple-600",
+                bgClass: "bg-purple-50",
+                imageUrl: "./pmt_images/DMP.jpg",
+                iconPath: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4",
+                painPoints: [" 数据分散在多个存储系统", "找数据靠人肉搜索，费时费力", "数据质量参差不齐", "真值版本混乱，无法溯源", "重复数据占用大量存储成本"],
+                sellingPoints: ["百PB级数据湖统一存储", "AI驱动的智能标签和检索", "自动化质检流程和评分", "真值版本控制和血缘追踪", "智能去重节省50%存储成本", "数据权限细粒度管控"],
+                value: "数据资产化，质量可控"
+            },
+            {
+                id: "product-4",
+                name: "车队管理平台",
+                subtitle: "运营与调度",
+                desc: "驾驶员任务分配、车辆资源监控、实时状态追踪。",
+                colorClass: "text-green-600",
+                bgClass: "bg-green-50",
+                imageUrl: "./pmt_images/flm.jpg",
+                iconPath: "M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v9H1V17a2 2 0 002 2h2m4 0h6m4 0h2v-5l-3-5h-6M13 16h6m-6-5h6",
+                painPoints: ["测试任务分配混乱，靠人工协调", "车辆状态不透明，不知道谁在用", "测试里程和场景覆盖难统计", "车队利用率低", "驾驶员反馈收集困难"],
+                sellingPoints: ["任务自动派发和智能推荐单", "实时车辆状态和位置监控", "里程/场景/事件自动统计", "微信小程序随时随地接任务", "驾驶员一键上报问题", "车辆健康度预警"],
+                value: "调度高效，过程透明"
+            },
+            {
+                id: "product-5",
+                name: "深度学习平台",
+                subtitle: "模型训练与管理",
+                desc: "GPU资源调度、模型版本管理、训练任务编排。",
+                colorClass: "text-indigo-600",
+                bgClass: "bg-indigo-50",
+                imageUrl: "./pmt_images/dlp.jpg",
+                iconPath: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+                painPoints: ["GPU资源抢占，训练排队等待", "模型版本管理混乱", "实验参数难复现", "训练过程缺乏监控", "多人协作时环境冲突", "推理部署配置繁琐"],
+                sellingPoints: ["GPU智能调度和弹性分配", "模型全生命周期版本管理", "实验自动记录和一键复现", "实时训练曲线和性能监控", "容器化隔离环境", "训练到推理一键部署"],
+                value: "训练加速，资源共享"
+            },
+            {
+                id: "product-6",
+                name: "数据分析平台",
+                subtitle: "低代码挖掘",
+                desc: "通过拖拽式工作流编排，快速挖掘corner case和数据价值。",
+                colorClass: "text-orange-600",
+                bgClass: "bg-orange-50",
+                imageUrl: "./pmt_images/dap.jpg",
+                iconPath: "M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z",
+                painPoints: ["分析环境搭建复杂，配置耗时", "数据接入需要写大量胶水代码", "分析流程难复用，每次重新造轮子", "团队经验无法沉淀", "数据科学家时间浪费在工程上"],
+                sellingPoints: ["拖拽式工作流编排，低代码，甚至0代码可上手", "内置海量数据接口，开箱即用", "分析模板库，一键复用", "支持混合编程", "自动生成可视化报告", "调度引擎支持定时和触发式分析"],
+                value: "人人都是数据分析师"
+            },
+            {
+                id: "product-7",
+                name: "开发容器平台",
+                subtitle: "云端开发环境",
+                desc: "标准化的云端开发环境，解决“在我电脑上能跑”的问题。",
+                colorClass: "text-teal-600",
+                bgClass: "bg-teal-50",
+                imageUrl: "./pmt_images/dp.jpg",
+                iconPath: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+                painPoints: ["开发环境配置耗时，新人上手慢", "依赖版本冲突频繁", "本地资源受限，跑不动大规模任务", "团队环境不统一，协作困难", "计算资源分配不均"],
+                sellingPoints: ["新员工30分钟可进入干活状态", "环境完全隔离，杜绝冲突", "弹性计算资源按需分配", "团队环境镜像统一管理", "支持GPU/大内存容器", "IDE集成，无缝开发体验"],
+                value: "开发就绪，环境统一"
+            },
+            {
+                id: "product-8",
+                name: "测试事件管理",
+                subtitle: "问题追踪",
+                desc: "打通开发与量产，全生命周期的测试事件记录与管理。",
+                colorClass: "text-pink-600",
+                bgClass: "bg-pink-50",
+                imageUrl: "./pmt_images/unisim.jpg",
+                iconPath: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
+                painPoints: ["事件全生命周期管理", "问题复现条件和数据难关联", "开发-测试-验证闭环周期长", "量产后用户反馈响应慢", "问题优先级评估靠人工经验"],
+                sellingPoints: ["事件全生命周期管理", "自动关联触发数据和日志", "问题-修复-验证闭环追踪", "量产后OTA事件自动上报", "Coredump等事件全自动上传解析", "统计报表自动生成"],
+                value: "问题不遗漏，改进有闭环"
+            },
+            {
+                id: "product-9",
+                name: "仿真调度平台",
+                subtitle: "大规模仿真",
+                desc: "支持多种仿真器的统一调度，云端大规模并发测试。",
+                colorClass: "text-sky-600",
+                bgClass: "bg-sky-50",
+                imageUrl: "./pmt_images/sim.jpg",
+                iconPath: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+                painPoints: ["仿真资源利用率低下", "大规模回归测试耗时长", "仿真结果分散，难统计分析", "失败用例重跑流程复杂", "硬件开/闭环仿真排队等待"],
+                sellingPoints: ["混合仿真资源智能调度", "分布式并行执行，10倍提速", "统一结果管理和可视化", "失败用例自动重试和根因分析", "支持SIL/SOL/POL/HOL/HIL统一调度", "场景库自动回归"],
+                value: "日行百万公里，加速验证"
+            },
+            {
+                id: "product-10",
+                name: "标注管理平台",
+                subtitle: "真值提供",
+                desc: "供应商管理、质量验收、计费结算及自动化标注工具集成。",
+                colorClass: "text-amber-600",
+                bgClass: "bg-amber-50",
+                imageUrl: "./pmt_images/label.jpg",
+                iconPath: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+                painPoints: ["多供应商质量参差不齐", "标注成本不透明，超预算", "标注工具不统一，格式转换麻烦", "标注进度难跟踪", "质量验收靠人工抽检"],
+                sellingPoints: ["供应商质量评分和排名正", "自动计费和成本预警", "内置多场景标注工具", "实时进度看板和预警", "AI辅助标注和自动质检", "支持众包和专业团队混合模式"],
+                value: "降本增效，高精真值"
+            },
+            {
+                id: "product-11",
+                name: "数据生成管理",
+                subtitle: "AIGC",
+                desc: "基于算法生成高保真合成数据，补充corner case。",
+                colorClass: "text-lime-600",
+                bgClass: "bg-lime-50",
+                imageUrl: "./pmt_images/sd.jpg",
+                iconPath: "M13 10V3L4 14h7v7l9-11h-7z",
+                painPoints: ["Corner case真实数据稀缺", "生成算法散落各处，难复用", "数据生成流程全靠手动", "生成数据真实性难评估", "场景参数化配置复杂"],
+                sellingPoints: ["生成算法库统一管理", "可视化数据生成管道编排", "支持规则/GAN/仿真/大模型等多种生成方式", "真实性自动评估和筛选", "场景参数化模板库", "大规模并行生成"],
+                value: "无中生有，补齐长尾"
+            }
+        ];
+
+        // 渲染 Grid
+        const gridContainer = document.getElementById('product-grid-container');
+        products.forEach(p => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-6 rounded-lg shadow-sm border border-gray-100 card-hover cursor-pointer group";
+            card.onclick = () => document.getElementById(p.id).scrollIntoView({behavior: 'smooth'});
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <div class="p-3 rounded-lg ${p.bgClass} ${p.colorClass} group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="${p.iconPath}"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Explore &rarr;</span>
+                </div>
+                <h3 class="text-lg font-bold text-bosch-dark mb-1 group-hover:text-bosch-blue transition-colors">${p.name}</h3>
+                <p class="text-xs text-bosch-light-blue font-medium mb-3 uppercase">${p.subtitle}</p>
+                <p class="text-sm text-bosch-gray line-clamp-2">${p.desc}</p>
+            `;
+            gridContainer.appendChild(card);
+        });
+
+        // 渲染详情区域
+        const detailsContainer = document.getElementById('products-details-container');
+        products.forEach((p, index) => {
+            const isEven = index % 2 === 0;
+            const section = document.createElement('section');
+            section.id = p.id;
+            section.className = `py-20 ${isEven ? 'bg-white' : 'bg-bosch-light'}`;
+            
+            const painPointsList = p.painPoints.map(item => 
+                `<li class="flex items-start"><span class="mr-2 text-red-500">&times;</span> ${item}</li>`
+            ).join('');
+            
+            const sellingPointsList = p.sellingPoints.map(item => 
+                `<li class="flex items-start"><span class="mr-2 text-green-500">&check;</span> ${item}</li>`
+            ).join('');
+
+            section.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="${isEven ? 'lg:order-1' : 'lg:order-2'}">
+                            <span class="${p.colorClass} font-bold text-sm uppercase tracking-widest mb-2 block">Product ${index + 1}</span>
+                            <h2 class="text-4xl font-bold text-bosch-dark mb-6">${p.name}</h2>
+                            <p class="text-xl text-bosch-gray mb-8 leading-relaxed">${p.desc}</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div class="bg-red-50/50 p-5 rounded-lg border border-red-100">
+                                    <h4 class="font-bold text-red-800 mb-3 text-sm uppercase">痛点挑战</h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        ${painPointsList}
+                                    </ul>
+                                </div>
+                                <div class="bg-green-50/50 p-5 rounded-lg border border-green-100">
+                                    <h4 class="font-bold text-green-800 mb-3 text-sm uppercase">核心优势</h4>
+                                    <ul class="text-sm text-gray-600 space-y-2">
+                                        ${sellingPointsList}
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="inline-flex items-center space-x-2 text-bosch-blue font-bold border-b-2 border-bosch-blue pb-1">
+                                <span>客户价值：</span>
+                                <span>${p.value}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="${isEven ? 'lg:order-2' : 'lg:order-1'} flex justify-center">
+                            <div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl group">
+                                <img 
+                                    src="${p.imageUrl}" 
+                                    alt="${p.name}" 
+                                    class="w-full h-full object-cover transform transition duration-700 group-hover:scale-105"
+                                    onerror="this.onerror=null;this.src='./test.jpg';"
+                                >
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            detailsContainer.appendChild(section);
+        });
+    </script>
+<script>window.parent.postMessage({ action: "ready" }, "*"); 
+ 
+window.console = new Proxy(console, {
+  get(target, prop) {
+    if (['log', 'warn', 'error'].includes(prop)) {
+      return new Proxy(target[prop], {
+        apply(fn, thisArg, args) {
+          fn.apply(thisArg, args);
+          window.parent.postMessage({ action: 'console', 
+            type: prop, 
+            args: args.map((arg) => {
+              try {
+                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
+              } catch (e) {
+                return arg;
+              }
+            }) 
+          }, '*');
+        }
+      });
+    }
+    return target[prop];
+  }
+});
+</script></body>
+</html>
